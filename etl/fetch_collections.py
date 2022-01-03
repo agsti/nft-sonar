@@ -13,10 +13,10 @@ def new_collection(api_data):
     return c
 
 
-def get_and_store_all_collections():
+def fetch_collections(n_pages=200):
     db_connection = DB()
     api = Opensea()
-    for p in range(200):
+    for p in range(n_pages):
         print("fetching page #%d" % (p))
         collection_page = api.get_collections(p)
         for c in collection_page:
@@ -26,4 +26,4 @@ def get_and_store_all_collections():
 
 
 if __name__ == '__main__':
-    get_and_store_all_collections()
+    fetch_collections()

@@ -20,6 +20,7 @@ class Asset:
     contract_address: str
     erc: str
     collection_id: str
+    kind: str
 
 
 class DB:
@@ -35,7 +36,8 @@ class DB:
                             slug,
                             name,
                             telegram_url,
-                            twitter_username)
+                            twitter_username
+                            )
                         values (?, ?, ?, ?, ?)""", (
                             c.created_at,
                             c.slug,
@@ -74,10 +76,11 @@ class DB:
         cur.execute("select rowid, slug from collections where latest_fetch is null")
         return cur
 
-    def set_asset_filename(self, asset_id, filename):
+    def set_asset_file(self, asset_id, filename, kind):
         self.connection.execute("""UPDATE assets
-                                    set filename = ?
-                                    where rowid = ?""", (filename, asset_id))
+                                    set filename = ?,
+                                    kind = ?
+                                    where rowid = ?""", (filename, kind, asset_id))
 
     def get_asset_files(self):
         return self.connection.execute("""select
@@ -102,6 +105,14 @@ class DB:
                                         from assets
                                         where
                                             filename is null""")
+
+    def get_assets(self, rowids):
+        if isinstance(rowids, list):
+            rowids = [rowids]
+
+        return self.connection.execute("""
+                SELECT * from assets where rowid in = ?
+                """, rowids )
 
     def commit(self):
         self.connection.commit()

@@ -1,7 +1,7 @@
-from ..base.db import DB
+from base.db import DB
 
-import imghdr
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from base.utils import asset_kind
 import requests
 
 import os
@@ -21,14 +21,14 @@ def download_picture(pic_url, id):
                 os.fsync(my_file)
     resp.close()
 
-    ext = imghdr.what(tmp_fname)
+    ext = asset_kind(tmp_fname)
 
     print("%s is %s" % (tmp_fname, ext))
     fname = "data/pictures/%d.%s" % (id, ext)
     shutil.move(tmp_fname, fname)
 
     connection = DB()
-    connection.set_asset_filename(id, fname)
+    connection.set_asset_file(id, fname, ext)
     connection.commit()
     return (pic_url, fname)
 

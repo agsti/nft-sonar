@@ -10,6 +10,7 @@ class Milvus:
         if (has_collection(self.collection_name)):
             print("Loading existing collection")
             self.__collection = Collection(name=self.collection_name)
+            self.__collection.load()
         else:
             print("Creating collection...", self.collection_name)
             self.__collection = self.create_schema()
