@@ -79,6 +79,22 @@ class DB:
                                     set filename = ?
                                     where rowid = ?""", (filename, asset_id))
 
+    def get_asset_files(self):
+        return self.connection.execute("""select
+                                            rowid,
+                                            filename
+                                        from assets
+                                        where
+                                            hash is NULL""")
+
+    def update_asset_hash(self, asset_id, hash):
+        return self.connection.execute("""select
+                                            rowid,
+                                            filename
+                                        from assets
+                                        where
+                                            hash is NULL""")
+
     def get_picture_urls(self):
         return self.connection.execute("""select
                                           rowid,
