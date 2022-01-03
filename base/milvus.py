@@ -15,7 +15,7 @@ class Milvus:
             self.__collection = self.create_schema()
 
     def create_schema(self):
-        dim = 128
+        dim = 1024
         default_fields = [
             FieldSchema(name="asset_id", dtype=DataType.INT64, is_primary=True),
             FieldSchema(name="float_vector", dtype=DataType.FLOAT_VECTOR, dim=dim)

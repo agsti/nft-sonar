@@ -7,8 +7,11 @@ name = "pypi"
 requests = "*"
 pymilvus = "==2.0.0rc8"
 tqdm = "*"
+numpy = "*"
+imagehash = "*"
+imagededup = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.9"
+python_version = "3.7"
