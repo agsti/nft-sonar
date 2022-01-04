@@ -1,16 +1,17 @@
 from base.db import DB
 
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from base.utils import asset_kind
+from base.utils import asset_kind, random_uuid
 import requests
 
 import os
 import shutil
 
 
-def download_picture(pic_url, id):
-    tmp_fname = "/tmp/nft_search/%s" % id
-    print("downloading %s" % pic_url)
+def download_picture(pic_url):
+    filename = random_uuid()
+    tmp_fname = f"data/pictures/{filename}"
+    print(f"downloading {pic_url} to {tmp_fname}")
     resp = requests.get(pic_url)
     with open(tmp_fname, 'wb') as my_file:
         # Read by 4KB chunks
@@ -22,24 +23,28 @@ def download_picture(pic_url, id):
     resp.close()
 
     ext = asset_kind(tmp_fname)
+    fname = f"data/pictures/{filename}.{ext}"
 
-    print("%s is %s" % (tmp_fname, ext))
-    fname = "data/pictures/%d.%s" % (id, ext)
     shutil.move(tmp_fname, fname)
+    return (fname, ext)
+
+
+def download_and_store_asset(asset_id, asset_url):
+    (filename, extension) = download_picture(asset_url)
+    print(f"Downloaded {filename} {extension}")
 
     connection = DB()
-    connection.set_asset_file(id, fname, ext)
+    connection.set_asset_file(id, filename, extension)
     connection.commit()
-    return (pic_url, fname)
 
 
 def download_all_pictures():
-    executor = ThreadPoolExecutor(max_workers=10)
+    executor = ThreadPoolExecutor(max_workers=1)
     db_connection = DB()
     urls = db_connection.get_picture_urls()
     futures = []
     for (id, url) in urls:
-        future = executor.submit(download_picture, url, id)
+        future = executor.submit(download_and_store_asset, id, url)
         futures += [future]
 
     for future in as_completed(futures):

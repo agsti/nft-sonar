@@ -107,12 +107,13 @@ class DB:
                                             filename is null""")
 
     def get_assets(self, rowids):
-        if isinstance(rowids, list):
+        if not isinstance(rowids, list):
             rowids = [rowids]
 
         return self.connection.execute("""
-                SELECT * from assets where rowid in = ?
-                """, rowids )
+                SELECT * from assets where rowid in ?
+                """, rowids)
 
     def commit(self):
+
         self.connection.commit()

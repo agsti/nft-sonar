@@ -1,6 +1,7 @@
 import unittest
 import random
-from milvus import Milvus
+from base.milvus import Milvus
+
 
 class TestMilvus(unittest.TestCase):
 

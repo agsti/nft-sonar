@@ -25,7 +25,8 @@ def extract_asset_data(asset, collection_id):
             url=asset["image_url"],
             name=asset["name"],
             marketplace_url=asset["permalink"],
-            collection_id=collection_id
+            collection_id=collection_id, 
+            kind=None
             )
 
 
