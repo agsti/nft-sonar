@@ -1,19 +1,20 @@
 
 from os.path import isfile
 from base.db import DB
-from base.milvus import Milvus
+from base.pinecone import Pinecone
 from base.hasher import Hasher
 
 
 def hash_images():
     db_con = DB()
-    milvus = Milvus()
+    pinecone = Pinecone()
     hasher = Hasher()
     asset_urls = db_con.get_asset_files()
+    print(f"Got {asset_urls.rowcount} assets to hash")
     for (asset_id, filename) in asset_urls:
         if isfile(filename):
             h = hasher.encode(filename)
-            milvus.insert(asset_id, h)
+            pinecone.insert(asset_id, h)
             db_con.update_asset_hash(asset_id, h)
             db_con.commit()
             print(f"Done wih {asset_id}")

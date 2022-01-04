@@ -1,4 +1,4 @@
-from base.milvus import Milvus
+from base.pinecone import Pinecone
 from base.hasher import Hasher
 from base.db import DB
 import sys
@@ -10,13 +10,13 @@ def main():
     filename = sys.argv[1]
     print(f"Going to use {filename}")
 
-    emmbeddings = hasher.encode(filename)
+    e = hasher.encode(filename)
     print("Encoded image")
-    milvus = Milvus()
-    print("Loaded milvus")
-    results = milvus.search(emmbeddings)
-    print("Got milvus results")
-    db.get_assets(results.ids)
+    pinecone = Pinecone()
+    print("Loaded pinecone")
+    results = pinecone.query(e)
+    print("Got pine results")
+    db.get_assets(results[0]['id'])
     breakpoint()
 
 
