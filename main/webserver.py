@@ -1,12 +1,18 @@
-from sanic import Sanic, response
-from base.milvus import Milvus
+from fastapi import FastAPI
+
 from base.hasher import Hasher
+from config.db import conn
+from model.asset import asset
 
-app = Sanic(name="NFT-Search")
 
-@app.route("/")
-async def index(request):
-    return response.json(results)
+def get_app():
+    app = FastAPI(title="GINO FastAPI Demo")
+    return app
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8000)
+
+app = get_app()
+
+
+@app.get("/")
+async def helloworld():
+    return conn.execute(asset.select()).fetchall()

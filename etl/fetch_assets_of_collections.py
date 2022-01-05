@@ -1,6 +1,7 @@
 import datetime
 from tqdm import tqdm
-from base.db import Asset, DB
+from model.asset import save_asset
+from model.collection import update_collection_latest_fetch, get_unfetched_collections
 from base.opensea import Opensea
 
 
@@ -18,30 +19,27 @@ def get_all_assets(collection):
 
 
 def extract_asset_data(asset, collection_id):
-    return Asset(
-            contract_name=asset["asset_contract"]["name"],
-            erc=asset["asset_contract"]["schema_name"],
-            contract_address=asset["asset_contract"]["address"],
-            url=asset["image_url"],
-            name=asset["name"],
-            marketplace_url=asset["permalink"],
-            collection_id=collection_id, 
-            kind=None
-            )
+    return {
+        'url': asset["image_url"],
+        'marketplace_url': asset["permalink"],
+        'name': asset["name"],
+        'contract_name': asset["asset_contract"]["name"],
+        'contract_address': asset["asset_contract"]["address"],
+        'erc': asset["asset_contract"]["schema_name"],
+        'collection_id': collection_id,
+        'kind': None
+    }
 
 
 def get_and_save_all_assets():
-    db_connection = DB()
-    cur = db_connection.get_unfetched_collections()
+    colections = get_unfetched_collections()
 
-    for (rowid, slug) in tqdm(cur):
-        assets = get_all_assets(slug)
+    for c in tqdm(colections):
+        assets = get_all_assets(c.slug)
         for a in assets:
-            db_connection.save_asset(extract_asset_data(a, rowid))
-        db_connection.update_collection_latest_fetch(rowid, datetime.datetime.now())
-        db_connection.commit()
-
-    cur.close()
+            # HERE
+            save_asset(extract_asset_data(a, c.id))
+            update_collection_latest_fetch(c.id, datetime.datetime.now())
 
 
 if __name__ == '__main__':

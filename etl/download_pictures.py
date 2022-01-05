@@ -1,4 +1,4 @@
-from base.db import DB
+from model.asset import set_asset_file, get_assets_to_download
 
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from base.utils import asset_kind, random_uuid
@@ -15,7 +15,7 @@ def download_picture(pic_url):
     resp = requests.get(pic_url)
     with open(tmp_fname, 'wb') as my_file:
         # Read by 4KB chunks
-        for byte_chunk in resp.iter_content(chunk_size=1024*10):
+        for byte_chunk in resp.iter_content(chunk_size=1024 * 10):
             if byte_chunk:
                 my_file.write(byte_chunk)
                 my_file.flush()
@@ -33,18 +33,15 @@ def download_and_store_asset(asset_id, asset_url):
     (filename, extension) = download_picture(asset_url)
     print(f"Downloaded {filename} {extension}")
 
-    connection = DB()
-    connection.set_asset_file(id, filename, extension)
-    connection.commit()
+    set_asset_file(asset_id, filename, extension)
 
 
 def download_all_pictures():
     executor = ThreadPoolExecutor(max_workers=1)
-    db_connection = DB()
-    urls = db_connection.get_picture_urls()
+    assets = get_assets_to_download()
     futures = []
-    for (id, url) in urls:
-        future = executor.submit(download_and_store_asset, id, url)
+    for a in assets:
+        future = executor.submit(download_and_store_asset, a.id, a.url)
         futures += [future]
 
     for future in as_completed(futures):

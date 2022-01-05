@@ -1,0 +1,15 @@
+version: "3"
+services:
+  db:
+    container_name: haka_db
+    image: postgres:12-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: nftsearch
+      POSTGRES_USER: nftsearch
+      POSTGRES_PASSWORD: nftsearch
+    volumes:
+      - ./docker/pg/data:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+
