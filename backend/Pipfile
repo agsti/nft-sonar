@@ -16,6 +16,8 @@ gunicorn = "*"
 alembic = "*"
 sqlalchemy = "*"
 python-multipart = "*"
+psycopg2 = "*"
+pinecone-client = "*"
 
 [dev-packages]
 
