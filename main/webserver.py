@@ -16,7 +16,7 @@ pinecone = Pinecone()
 
 
 @app.post("/")
-async def helloworld(file: UploadFile = File(...)):
+async def query(file: UploadFile = File(...)):
     # Get upload file
     # Hash it
     embedding = h.encode_file(file.file)
@@ -27,8 +27,8 @@ async def helloworld(file: UploadFile = File(...)):
         m['asset'] = find_asset(m['asset_id'])
         return m
 
+    # Get asset per pinecone answer
     with_assets = [fetch_asset(m) for m in top_k_matches]
 
-    # Get asset per pinecone answer
     # Return
     return with_assets

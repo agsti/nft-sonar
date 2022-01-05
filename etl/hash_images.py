@@ -12,7 +12,7 @@ def hash_images():
     print(f"Got {len(assets)} assets to hash")
     for asset in assets:
         if isfile(asset.filename):
-            h = hasher.encode(asset.filename)
+            h = hasher.encode_filename(asset.filename)
             pinecone.insert(asset.id, h)
             set_asset_hashed_at(asset.id, datetime.now())
             print(f"Done wih {asset.id}")

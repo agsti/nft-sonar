@@ -37,7 +37,7 @@ def download_and_store_asset(asset_id, asset_url):
 
 
 def download_all_pictures():
-    executor = ThreadPoolExecutor(max_workers=1)
+    executor = ThreadPoolExecutor(max_workers=10)
     assets = get_assets_to_download()
     futures = []
     for a in assets:

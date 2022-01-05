@@ -5,7 +5,7 @@ from etl.hash_images import hash_images
 
 
 def main():
-    fetch_collections(0)
+    fetch_collections(1)
     get_and_save_all_assets()
     download_all_pictures()
     hash_images()

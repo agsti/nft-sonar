@@ -1,6 +1,7 @@
 from sqlalchemy import Table, Column
 from sqlalchemy.types import String, Integer, DateTime
 from sqlalchemy.schema import ForeignKey
+from sqlalchemy.sql.expression import and_
 
 from datetime import datetime
 from config.db import meta, conn
@@ -29,8 +30,9 @@ def get_assets_to_download():
 
 
 def get_assets_to_hash():
-    return conn.execute(
-        asset.select().where(asset.c.hashed_at == None)).fetchall()
+    return conn.execute(asset.select().where(
+        and_(asset.c.hashed_at == None, asset.c.filename != None,
+             asset.c.kind != "None"))).fetchall()
 
 
 def set_asset_hashed_at(asset_id: int, hashed_at: datetime):
