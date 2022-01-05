@@ -10,13 +10,12 @@ tqdm = "*"
 numpy = "*"
 imagehash = "*"
 imagededup = "*"
-gino = "*"
 fastapi = "*"
 uvicorn = "*"
 gunicorn = "*"
-gino-starlette = "*"
 alembic = "*"
 sqlalchemy = "*"
+python-multipart = "*"
 
 [dev-packages]
 

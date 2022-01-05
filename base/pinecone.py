@@ -1,13 +1,13 @@
 import pinecone
-import settings
+import config.env
 
 
 class Pinecone:
 
     def __init__(self):
-        api_key = settings.pinecone_api_key
+        api_key = config.env.PINECONE_API_KEY
         pinecone.init(api_key=api_key, enironment='us-west1-gcp')
-        index_name = settings.pinecone_index_name
+        index_name = config.env.PINECONE_INDEX_NAME
         self.index = pinecone.Index(index_name=index_name)
 
     def insert(self, asset_id, embedding):
@@ -24,9 +24,7 @@ class Pinecone:
         r = self.index.query(queries=[embedding], top_k=5)
 
         def extract_data(m):
-            return {
-                    'asset_id': int(m['id']),
-                    'score': m['score']
-                    }
+            return {'asset_id': int(m['id']), 'score': m['score']}
+
         m = map(extract_data, r['results'][0]['matches'])
         return list(m)
