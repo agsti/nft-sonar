@@ -1,0 +1,25 @@
+.dropzone {
+    background: #AAAAAA;
+    padding: 30px;
+    border-style: dashed;
+    border-radius: 15px;
+}
+
+.dropzoneActive {
+    background: red;
+    padding: 30px;
+    border-style: dashed;
+    border-radius: 15px;
+}
+
+.dropzoneInput {
+}
+
+.textCenter {
+    max-width: 300px;
+    text-align: center;
+    color: #111;
+    font-weight: bold;
+}
+.dropzoneContent {
+}

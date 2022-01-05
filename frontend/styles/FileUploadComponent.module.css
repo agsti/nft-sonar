@@ -1,0 +1,21 @@
+.dropzone {
+    background: #AAAAAA;
+    padding: 30px;
+    border-style: dashed;
+}
+
+.dropzoneActive {
+    background: red;
+}
+
+.dropzoneInput {
+    background: blue;
+    color: blue;
+}
+
+.textCenter {
+    background: pink;
+}
+.dropzoneContent {
+    background: cyan;
+}

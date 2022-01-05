@@ -1,0 +1,13 @@
+.container {
+    display: flex;
+    margin: 100;
+}
+
+.itemCard {
+    border: solid;
+    padding: 10px 10px 100px 10px;
+    background: blue;
+}
+.itemImg{
+    max-width: 300px;
+}
