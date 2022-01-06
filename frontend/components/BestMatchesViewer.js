@@ -5,7 +5,10 @@ const BestMatchItem = ({item}) =>{
     return <div className={styles.itemCard}>
         <img className={styles.itemImg} src = {item.asset.url} />
         <div className={styles.footer}>
-            {item.asset.id}: {item.asset.name}
+            {item.asset_id}: {item.asset.name}
+        </div>
+        <div className={styles.footer}>
+            {item.score}
         </div>
     </div>
 }
@@ -15,7 +18,7 @@ const BestMatchItem = ({item}) =>{
 
 const BestMatchesViewer = ({bestMatches}) => {
     return (
-        <div className={styles.container} >
+        <div className="columns-3">
             {bestMatches.map((m) => <BestMatchItem item={m}/> )}
         </div>
     )

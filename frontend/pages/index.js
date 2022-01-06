@@ -32,13 +32,13 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>NFT-SONAR</title>
+        <title >NFT-SONAR</title>
         <meta name="description" content="Nft sonar is a platform that allows to find NFT's in the wild" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
+        <h1 className="text-3xl text-lime-300 font-bold underline">
             NFT Sonar
         </h1>
 
