@@ -20,11 +20,18 @@ const Dropzone = ({ onDrop, accept }) => {
             {...getRootProps()}
         >
             <input {...getInputProps()} />
-            <div className="text-whitish text-xl">
+            <div className="text-center text-whitish text-xl">
                 {isDragActive ? (
                     <p>Release to drop the files here</p>
                 ) : (
-                    <p>Drag &apos;n&apos; drop some files here</p>
+                    <>
+                        <p>
+                            <b>Drag &apos;n&apos; drop</b> some files here
+                        </p>
+                        <p>
+                            Or <b>click</b> to select a file
+                        </p>
+                    </>
                 )}
             </div>
         </div>

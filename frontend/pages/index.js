@@ -2,6 +2,7 @@ import axios from 'axios'
 import Head from 'next/head'
 import FileUpload from '../components/FileUploadComponent.js'
 import ClosestMatchesViewer from '../components/ClosestMatchesViewer.js'
+import NftSonarLogo from '../components/NftSonarLogo.js'
 import { useState } from 'react'
 
 export default function Home() {
@@ -41,9 +42,7 @@ export default function Home() {
             <div className="absolute top-0 left-0 h-screen flex flex-col justify-center items-center bg-hero bg-cover w-full">
                 {/* <Image src="/public/vercel.svg" layout='fill'/> */}
 
-                <h1 className="text-7xl font-bold my-10 text-whitish">
-                    NFT Sonar
-                </h1>
+                <NftSonarLogo />
                 <FileUpload onDrop={onDrop} accept="image/*" />
                 {matches && <ClosestMatchesViewer matches={matches} />}
             </div>
