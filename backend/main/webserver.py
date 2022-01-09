@@ -37,7 +37,6 @@ async def query(file: UploadFile = File(...)):
 
     def fetch_asset(m):
         m['asset'] = find_asset(m['asset_id'])
-        print(dict(m['asset']))
         return m
 
     # Get asset per pinecone answer
