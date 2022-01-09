@@ -1,12 +1,15 @@
 import axios from 'axios'
 import Head from 'next/head'
 import FileUpload from '../components/FileUploadComponent.js'
-import ClosestMatchesViewer from '../components/ClosestMatchesViewer.js'
+import MatchedView from '../components/MatchedView.js'
+import NoMatchView from '../components/NoMatchView.js'
 import NftSonarLogo from '../components/NftSonarLogo.js'
 import { useState } from 'react'
 
 export default function Home() {
     const [matches, setMatches] = useState()
+    const [winner, setWinner] = useState()
+    const [uploadedImage, setUploadedImage] = useState()
     async function upload(file, onUploadProgress) {
         var formData = new FormData()
         formData.append('file', file)
@@ -19,13 +22,19 @@ export default function Home() {
                 },
             }
         )
-        console.log(response.data)
+        const bestMatch = response.data[0]
+        console.log(bestMatch)
+        if (bestMatch.score > 0.8) {
+            setWinner(bestMatch)
+        }
         setMatches(response.data)
     }
 
     async function onDrop(drop) {
+        setUploadedImage(drop[0].name)
         if (drop.length == 1) {
             upload(drop[0])
+            setUploadedImage(URL.createObjectURL(drop[0]))
         }
     }
 
@@ -39,12 +48,17 @@ export default function Home() {
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <div className="absolute top-0 left-0 h-screen flex flex-col justify-center items-center bg-hero bg-cover w-full">
+            <div className="flex px-10 flex-col min-h-screen justify-center items-center bg-hero bg-cover w-full">
                 {/* <Image src="/public/vercel.svg" layout='fill'/> */}
 
                 <NftSonarLogo />
                 <FileUpload onDrop={onDrop} accept="image/*" />
-                {matches && <ClosestMatchesViewer matches={matches} />}
+                {winner ? (
+                    <MatchedView winner={winner} />
+                ) : (
+                    matches && <NoMatchView matches={matches} />
+                )}
+                {/* <img src={uploadedImage} /> */}
             </div>
         </div>
     )

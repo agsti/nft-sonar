@@ -16,8 +16,8 @@ const MatchItem = ({ item }) => {
                 <div className="my-1 text-left font-bold">
                     {item.asset.name}
                 </div>
-                <div className="text-left ">
-                    <a href={item.asset.marketplace_url}>BUY ON OPEN SEA</a>
+                <div className="text-left underline">
+                    <a href={item.asset.marketplace_url}>Details</a>
                 </div>
             </div>
         </div>

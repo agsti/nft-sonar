@@ -16,7 +16,7 @@ const Dropzone = ({ onDrop, accept }) => {
 
     return (
         <div
-            className="p-4 my-10 border-4 border-whitish border-dashed rounded-lg"
+            className="p-4 my-10 border-4 border-whitish border-dashed rounded-lg transition-all hover:cursor-pointer hover:border-8 hover:border-solid"
             {...getRootProps()}
         >
             <input {...getInputProps()} />
