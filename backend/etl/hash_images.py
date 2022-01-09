@@ -9,6 +9,7 @@ def hash_images():
     pinecone = Pinecone()
     hasher = Hasher()
     assets = get_assets_to_hash()
+    breakpoint()
     print(f"Got {len(assets)} assets to hash")
     for asset in assets:
         if isfile(asset.filename):

@@ -1,4 +1,5 @@
 from fastapi import FastAPI, UploadFile, File
+from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 
 from base.hasher import Hasher
@@ -26,7 +27,7 @@ h = Hasher()
 pinecone = Pinecone()
 
 
-@app.post("/")
+@app.post("/upload-file")
 async def query(file: UploadFile = File(...)):
     # Get upload file
     # Hash it
@@ -36,6 +37,7 @@ async def query(file: UploadFile = File(...)):
 
     def fetch_asset(m):
         m['asset'] = find_asset(m['asset_id'])
+        print(dict(m['asset']))
         return m
 
     # Get asset per pinecone answer
@@ -43,3 +45,6 @@ async def query(file: UploadFile = File(...)):
 
     # Return
     return with_assets
+
+
+app.mount("/", StaticFiles(directory="static"), name="static")

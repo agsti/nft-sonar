@@ -23,3 +23,10 @@ pinecone-client = "*"
 
 [requires]
 python_version = "3.7"
+
+[scripts]
+migration = "alembic revision -m \"your migration description\" --autogenerate --head head"
+apply_migration = "alembic upgrade head"
+etl = "python -m main.etl"
+webserver = "uvicorn main.webserver:app --reload"
+

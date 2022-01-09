@@ -21,7 +21,7 @@ asset = Table("assets", meta, Column("id", Integer, primary_key=True),
 
 
 def find_asset(asset_ids):
-    return conn.execute(asset.select()).first()
+    return conn.execute(asset.select().where(asset.c.id == asset_ids)).first()
 
 
 def get_assets_to_download():

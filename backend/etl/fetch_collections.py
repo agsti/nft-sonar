@@ -1,6 +1,7 @@
 from datetime import datetime
 from model.collection import save_collection
 from base.opensea import Opensea
+from sqlalchemy.exc import DBAPIError
 
 
 def new_collection(api_data):
@@ -22,7 +23,10 @@ def fetch_collections(n_pages=200):
         collection_page = api.get_collections(p)
         for c in collection_page:
             collection_data = new_collection(c)
-            save_collection(collection_data)
+            try:
+                save_collection(collection_data)
+            except DBAPIError as e:
+                print("Error while saving collection", e.statement)
 
 
 if __name__ == '__main__':

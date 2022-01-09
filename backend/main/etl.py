@@ -6,9 +6,9 @@ from etl.hash_images import hash_images
 
 def main():
     print("=" * 20, " FETCHING COLLECTIONS ", "=" * 20)
-    fetch_collections(1)
+    # fetch_collections(1)
     print("=" * 23, " FETCHING ASSETS ", "=" * 20)
-    get_and_save_all_assets()
+    # get_and_save_all_assets()
     print("=" * 20, " DOWNLOADING PICTURES ", "=" * 20)
     download_all_pictures()
     print("=" * 20, " HASHING IMAGES ", "=" * 20)

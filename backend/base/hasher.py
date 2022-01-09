@@ -11,7 +11,7 @@ class Hasher:
         return i_hash.flatten().tolist()
 
     def encode_file(self, file):
-        file_image = Image.open(file)
+        file_image = Image.open(file).convert('RGB')
         d = asarray(file_image)
         i_hash = self.cnn.encode_image(image_array=d)
         return i_hash.flatten().tolist()
