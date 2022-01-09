@@ -5,10 +5,8 @@ name = "pypi"
 
 [packages]
 requests = "*"
-pymilvus = "==2.0.0rc8"
 tqdm = "*"
 numpy = "*"
-imagehash = "*"
 imagededup = "*"
 fastapi = "*"
 uvicorn = "*"
